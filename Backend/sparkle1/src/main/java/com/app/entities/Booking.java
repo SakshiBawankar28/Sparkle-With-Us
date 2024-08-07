@@ -12,27 +12,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "booking")
-public class Booking extends BaseEntity{
-
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//	@Column(name = "book_id")
-//	private Long bookId;
-//	@Column(name = "cust_id", nullable = false)
-//	private Long custId;
-//	@Column(name = "service_id", nullable = false)
-//	private Long serviceId;
-	
+public class Booking extends BaseEntity
+{
 	@Enumerated(EnumType.STRING)
-	@Column(length = 50)
+	@Column(name="booking_status", length = 50, nullable = false)
 	private BookStatus bookStatus;
 
+	@Column(name="booking_date")
 	private LocalDate bookingDate;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
+	@Column(name="time_slote", nullable = false)
 	private LocalTime timeSlot;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "customer_Id", nullable = false)
 	private Customer customers;
 	
@@ -41,10 +38,10 @@ public class Booking extends BaseEntity{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Booking(BookStatus bookStatus, LocalDate bookingDate, LocalTime timeSlot, Customer customers) {
+	public Booking(BookStatus bookStatus, String bookingDate, LocalTime timeSlot, Customer customers) {
 		super();
 		this.bookStatus = bookStatus;
-		this.bookingDate = bookingDate;
+		this.bookingDate = LocalDate.parse(bookingDate);
 		this.timeSlot = timeSlot;
 		this.customers = customers;
 	}

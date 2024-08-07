@@ -3,6 +3,7 @@ package com.app.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="address")
@@ -11,15 +12,24 @@ public class Address extends BaseEntity{
     
 	@Column(name="adr_line1",length=100)
 	private String adrLine1;
+	
 	@Column(name="adr_line2",length=100)
 	private String adrLine2;
+	
 	@Column(length=20)
+	@NotNull(message = "City is mandatory")
 	private String city;
+	
 	@Column(length=20)
+	@NotNull(message = "State is mandatory")
 	private String state;
+	
 	@Column(length=20)
+	@NotNull(message = "Country is mandatory")
 	private String country;
+	
 	@Column(length=20,name="zip_code")
+	@NotNull(message = "Zip-Code is mandatory")
 	private String zipCode;
 	
 	public Address() {

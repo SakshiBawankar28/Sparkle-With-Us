@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name="review")
@@ -14,13 +16,17 @@ public class Review extends BaseEntity{
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
 //	private Long id ;
 	
-	@Column(length = 20 , name = "first_name")
+	@Column(length = 20 , name = "first_name", nullable = false)
 	private String firstName;
-	@Column(length = 20 , name = "last_name")
+	
+	@Column(length = 20 , name = "last_name", nullable = false)
 	private String lastName;
+	
 	@Column(length = 100 )
 	private String comments;
 	
+	@Min(1)
+    @Max(5)
 	private int rating;
 
 	

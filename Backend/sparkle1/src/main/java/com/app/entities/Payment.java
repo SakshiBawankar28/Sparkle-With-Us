@@ -19,7 +19,7 @@ public class Payment extends BaseEntity
 	private double amount;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(length = 30)
+	@Column(name="payment_mode",length = 30)
 	private PaymentMode paymentMode;
 	
 	//ctor
