@@ -2,6 +2,7 @@ package com.app.service;
 
 import java.util.List;
 
+import com.app.dto.ApiResponse;
 import com.app.entities.Review;
 
 public interface ReviewService {
@@ -10,7 +11,7 @@ public interface ReviewService {
 
 	Review getById(Long id) ;
 	
-	Review addReview(Review review) ;
+	ApiResponse addReview(Review review) ;
 
 	Review updateReview(Review review) ;
 

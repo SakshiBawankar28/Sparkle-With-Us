@@ -8,8 +8,11 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.dto.ApiResponse;
+import com.app.entities.Customer;
 import com.app.entities.Review;
 import com.app.exception.ResourceNotFoundException;
+import com.app.repository.CustomerRepository;
 import com.app.repository.ReviewRepository;
 
 @Service
@@ -18,6 +21,8 @@ public class ReviewServiceImpl implements ReviewService
 {
 	@Autowired
 	private ReviewRepository reviewRepository;
+	@Autowired
+	private CustomerRepository customerRepository;
 	
 	@Override
 	public List<Review> getAllReview() 
@@ -33,9 +38,13 @@ public class ReviewServiceImpl implements ReviewService
 	}
 
 	@Override
-	public Review addReview(Review review) 
+	public ApiResponse addReview(Review review) 
 	{
-		return reviewRepository.save(review);
+		
+		Customer customer = customerRepository.findById(review.getCustomer())
+				//.orElseThrow(() -> new ResourceNotFoundException("Invalid commenter id!!!"));
+		//return reviewRepository.save(review);
+		return null;
 	}
 
 	@Override

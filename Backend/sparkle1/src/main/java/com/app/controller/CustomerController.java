@@ -3,6 +3,8 @@ package com.app.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,38 +30,42 @@ public class CustomerController
 	}
 	
 	@GetMapping
-	public List<Customer> getAllCustomerDetails()
-	{
-		return customerService.getAllCustomerDetails();
-	}
-	
-	@GetMapping("/{id}")
-	public Customer getCustomerById(@PathVariable Long id)
-	{
-		return customerService.getCustomerById(id);
-	}
-	
-	@PostMapping
-	public Customer assNewCustomer(@RequestBody Customer customer)
-	{
-		return customerService.addCustomerDetails(customer);
-	}
-	
-	@DeleteMapping("/{id}")
-	public String deleteCategoryById(@PathVariable Long id)
-	{
-		return customerService.deleteCustomerById(id);
-	}
-	
-	@PutMapping
-	public Customer updateCustomerDetails(@RequestBody Customer customer)
-	{
-		return customerService.updateCustomerDetails(customer);
-	}
-	
-	@GetMapping("/sorted")
-    public List<Customer> getAllCustomersSortedByName() {
+    public ResponseEntity<List<Customer>> getAllCustomerDetails() {
+        List<Customer> customers = customerService.getAllCustomerDetails();
+        return ResponseEntity.ok(customers);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
+        Customer customer = customerService.getCustomerById(id);
+        if (customer != null) {
+            return ResponseEntity.ok(customer);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<Customer> addNewCustomer(@RequestBody Customer customer) {
+        Customer newCustomer = customerService.addCustomerDetails(customer);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newCustomer);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCustomerById(@PathVariable Long id) {
+        String response = customerService.deleteCustomerById(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping
+    public ResponseEntity<Customer> updateCustomerDetails(@RequestBody Customer customer) {
+        Customer updatedCustomer = customerService.updateCustomerDetails(customer);
+        return ResponseEntity.ok(updatedCustomer);
+    }
+
+    @GetMapping("/sorted")
+    public ResponseEntity<List<Customer>> getAllCustomersSortedByName() {
         List<Customer> sortedCustomers = customerService.getAllCustomersSortedByName();
-        return sortedCustomers;
+        return ResponseEntity.ok(sortedCustomers);
     }
 }

@@ -47,7 +47,49 @@ public class Review extends BaseEntity{
 		this.rating = rating;
 		this.customer = customer;
 	}
+	
+	//getter & setter
+	public String getFirstName() {
+		return firstName;
+	}
 
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	//toString
 	@Override
 	public String toString() {
 		return "Review [firstName=" + firstName + ", lastName=" + lastName + ", comments=" + comments + ", rating="

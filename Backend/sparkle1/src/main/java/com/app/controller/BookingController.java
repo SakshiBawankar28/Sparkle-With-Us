@@ -3,6 +3,8 @@ package com.app.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,40 +30,44 @@ public class BookingController
 	}
 	
 	@GetMapping
-	public List<Booking> getAllBookingDetails()
-	{
-		return bookingService.getAllBookingDetails();
-	}
-	
-	@GetMapping("/{id}")
-	public Booking getBookingDetailsById(@PathVariable Long id)
-	{
-		return bookingService.getBookingDetailsById(id);
-	}
-	
-	@DeleteMapping("/{id}")
-	public String deleteBookingById(Long id)
-	{
-		return bookingService.deleteBookingById(id);
-	}
-	
-	@PostMapping
-	public Booking addNewBooking(@RequestBody Booking newBooking)
-	{
-		return bookingService.addNewBookingDetails(newBooking);
-	}
-	
-	@PutMapping
-	public Booking updateBookingDetalis(@RequestBody Booking booking)
-	{
-		return bookingService.updateBookingDetails(booking);
-	}
-	
-	@GetMapping("/sorted")
-	public List<Booking> getBookingSortedBydate()
-	{
-		return bookingService.findAllByOrderByBookingDateAsc();
-	}
+    public ResponseEntity<List<Booking>> getAllBookingDetails() {
+        List<Booking> bookings = bookingService.getAllBookingDetails();
+        return ResponseEntity.ok(bookings);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Booking> getBookingDetailsById(@PathVariable Long id) {
+        Booking booking = bookingService.getBookingDetailsById(id);
+        if (booking != null) {
+            return ResponseEntity.ok(booking);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteBookingById(@PathVariable Long id) {
+        String response = bookingService.deleteBookingById(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping
+    public ResponseEntity<Booking> addNewBooking(@RequestBody Booking newBooking) {
+        Booking booking = bookingService.addNewBookingDetails(newBooking);
+        return ResponseEntity.status(HttpStatus.CREATED).body(booking);
+    }
+
+    @PutMapping
+    public ResponseEntity<Booking> updateBookingDetails(@RequestBody Booking booking) {
+        Booking updatedBooking = bookingService.updateBookingDetails(booking);
+        return ResponseEntity.ok(updatedBooking);
+    }
+
+    @GetMapping("/sorted")
+    public ResponseEntity<List<Booking>> getBookingSortedByDate() {
+        List<Booking> sortedBookings = bookingService.findAllByOrderByBookingDateAsc();
+        return ResponseEntity.ok(sortedBookings);
+    }
 }
 
 
