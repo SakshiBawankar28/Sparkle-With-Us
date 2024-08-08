@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.entities.Booking;
+import com.app.entities.Customer;
 import com.app.service.BookingService;
+import com.app.service.CustomerService;
 
 @RestController
 @RequestMapping("/booking")
@@ -23,6 +25,8 @@ public class BookingController
 {
 	@Autowired
 	private BookingService bookingService;
+	@Autowired
+	private CustomerService customerService;
 	
 	public BookingController() 
 	{
@@ -56,6 +60,17 @@ public class BookingController
         Booking booking = bookingService.addNewBookingDetails(newBooking);
         return ResponseEntity.status(HttpStatus.CREATED).body(booking);
     }
+    
+//    @PostMapping("/booking")
+//    public ResponseEntity<Booking> addNewBooking(@RequestBody Booking newBooking) {
+//        Customer customer = newBooking.getCustomers();
+//        if (customer.getId() == null) {
+//            customerService.save(customer); // Save the customer first if it's new
+//        }
+//        Booking savedBooking = bookingService.save(newBooking); // Then save the booking
+//        return ResponseEntity.ok(savedBooking);
+//    }
+
 
     @PutMapping
     public ResponseEntity<Booking> updateBookingDetails(@RequestBody Booking booking) {

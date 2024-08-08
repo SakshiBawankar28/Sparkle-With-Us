@@ -11,7 +11,7 @@ public interface ReviewService {
 
 	Review getById(Long id) ;
 	
-	ApiResponse addReview(Review review) ;
+	Review addReview(Review review) ;
 
 	Review updateReview(Review review) ;
 

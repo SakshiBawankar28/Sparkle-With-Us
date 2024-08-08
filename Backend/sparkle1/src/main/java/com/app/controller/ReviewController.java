@@ -20,7 +20,8 @@ import com.app.service.ReviewService;
 
 @RestController
 @RequestMapping("/review")
-public class ReviewController {
+public class ReviewController 
+{
 	@Autowired
 	private ReviewService reviewService;
 	
@@ -35,13 +36,8 @@ public class ReviewController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Review> addReview(@RequestBody Review revi) {
-		try {
-			Review review = reviewService.addReview(revi);
-			return new ResponseEntity<>(review, HttpStatus.CREATED);
-		} catch (ResourceNotFoundException e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+	public Review addReview(@RequestBody Review review) {
+		return reviewService.addReview(review);
 	}
 
 	@GetMapping("/{id}")
