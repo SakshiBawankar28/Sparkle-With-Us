@@ -15,46 +15,59 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.entities.Review;
-import com.app.exception.ResourceNotFoundException;
 import com.app.service.ReviewService;
 
 @RestController
 @RequestMapping("/review")
-public class ReviewController 
-{
-	@Autowired
-	private ReviewService reviewService;
-	
-	public ReviewController() 
-	{
-		System.out.println("In Review Controller class " + getClass());
-	}
+public class ReviewController {
 
-	@GetMapping
-	public List<Review> getAllReview() {
-		return reviewService.getAllReview();
+    @Autowired
+    private ReviewService reviewService;
+    
+    public ReviewController() {
+		System.out.println("In Review Controller "+getClass());
 	}
-
-	@PostMapping
-	public Review addReview(@RequestBody Review review) {
-		return reviewService.addReview(review);
-	}
-
-	@GetMapping("/{id}")
-	public Review getById(Long id) throws ResourceNotFoundException {
-		return reviewService.getById(id);
-	}
-
-	@PutMapping("/{id}")
-	public ResponseEntity<Review> updateReview(Review review) 
-	{
-		Review review1 = reviewService.updateReview(review);
-		return ResponseEntity.ok(review1);
-	}
-
-	@DeleteMapping("/{id}")
-	public String removeReview(@PathVariable Long id){
-		return reviewService.removeReview(id);
-
-	}
+    
+    @GetMapping
+    public ResponseEntity<List<Review>> getAllReview() {
+        List<Review> reviews = reviewService.getAllReview();
+        return ResponseEntity.ok(reviews);
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<Review> getById(@PathVariable Long id) {
+        Review review = reviewService.getReviewDetails(id);
+        if (review != null) {
+            return ResponseEntity.ok(review);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+    
+    @PostMapping
+    public ResponseEntity<Review> addNewReview(@RequestBody Review review) {
+        Review createdReview = reviewService.addNewReview(review);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdReview);
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Review> updateReviewDetails(@PathVariable Long id, @RequestBody Review review) {
+        review.setId(id); // Ensure the ID is set in the review object
+        Review updatedReview = reviewService.updateReviewDetails(review);
+        if (updatedReview != null) {
+            return ResponseEntity.ok(updatedReview);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteReviewDetails(@PathVariable Long id) {
+        String response = reviewService.deleteReviewDetails(id);
+        if (response.equals("Review deleted successfully")) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
 }
