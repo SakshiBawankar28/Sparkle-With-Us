@@ -1,5 +1,7 @@
 package com.app.entities;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,10 +18,21 @@ public class Payment extends BaseEntity
 	@JoinColumn(name = "customer_id",nullable= false)
 	private  Customer customer;
 
+	@OneToOne
+	@JoinColumn(name="booking_id", nullable = false)
+	private Booking bookingId;
+	
+	@Column(name="transaction_id", nullable = false)
+	private Long transactionId;
+	
+	@Column(name="payment_date", nullable = false)
+	private LocalDateTime paymentDate;
+	
+	@Column(nullable = false)
 	private double amount;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name="payment_mode",length = 30)
+	@Column(name="payment_mode",length = 50)
 	private PaymentMode paymentMode;
 	
 	//ctor
