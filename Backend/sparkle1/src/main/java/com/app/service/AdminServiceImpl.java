@@ -45,28 +45,30 @@ public class AdminServiceImpl implements AdminService
 		return customerRepository.findAll();
 	}
 
-	@Override
-	public Customer addCustomerDetails(Customer nweCustomer) 
-	{
-		return customerRepository.save(nweCustomer);
-	}
+//	@Override
+//	public Customer addCustomerDetails(Customer nweCustomer) 
+//	{
+//		return customerRepository.save(nweCustomer);
+//	}
+//	
+//	@Override
+//	public String deleteCustomerById(Long id) 
+//	{
+//		if (customerRepository.existsById(id)) 
+//		{
+//			customerRepository.deleteById(id);
+//			return "Customer details deleted";
+//		}
+//		return "Deleting customer details failed : Invalid Customer ID";
+//	}
+//
+//	@Override
+//	public Customer updateCustomerDetails(Customer customer) 
+//	{
+//		return customerRepository.save(customer);
+//	}
 	
-	@Override
-	public String deleteCustomerById(Long id) 
-	{
-		if (customerRepository.existsById(id)) 
-		{
-			customerRepository.deleteById(id);
-			return "Customer details deleted";
-		}
-		return "Deleting customer details failed : Invalid Customer ID";
-	}
-
-	@Override
-	public Customer updateCustomerDetails(Customer customer) 
-	{
-		return customerRepository.save(customer);
-	}
+	
 
     // Stylist Management
 	@Override
@@ -80,43 +82,29 @@ public class AdminServiceImpl implements AdminService
 		return stylist.orElseThrow(() -> new ResourceNotFoundException("Invalid Stylist Id"));
 	}
 
-	@Override
-	public String deleteStylistDetails(Long id) {
-		if (stylistRepository.existsById(id)) {
-			stylistRepository.deleteById(id);
-			return "Stylist details deleted";
-		}
-		return "Deleting stylist details failed :Invaid Stylist ID";
-	}
-
-	@Override
-	public Stylist updateStylistDetail(Stylist stylist) {
-		return stylistRepository.save(stylist);
-	}
-
-	@Override
-	public Stylist addNewStylist(Stylist stylist) 
-	{	
-		return stylistRepository.save(stylist);
-	}
+//	@Override
+//	public String deleteStylistDetails(Long id) {
+//		if (stylistRepository.existsById(id)) {
+//			stylistRepository.deleteById(id);
+//			return "Stylist details deleted";
+//		}
+//		return "Deleting stylist details failed :Invaid Stylist ID";
+//	}
+//
+//	@Override
+//	public Stylist updateStylistDetail(Stylist stylist) {
+//		return stylistRepository.save(stylist);
+//	}
+//
+//	@Override
+//	public Stylist addNewStylist(Stylist stylist) 
+//	{	
+//		return stylistRepository.save(stylist);
+//	}
 	
 	
 
     // Booking Management
-
-	@Override
-	public Booking addNewBookingDetails(Booking newBooking) 
-	{
-		if(newBooking.getCustomers() == null || newBooking.getId() == null)
-		{
-			throw new IllegalArgumentException("Customer must not be null and must have an ID");
-		}
-		Long customerId = newBooking.getCustomers().getId();
-		Customer customer = customerRepository.findById(customerId)
-				.orElseThrow(() -> new ResourceNotFoundException("Customer not found with ID: " + customerId));
-		newBooking.setCustomers(customer);
-		return bookingRepository.save(newBooking);
-	}
 
 	
 	@Override
@@ -126,27 +114,42 @@ public class AdminServiceImpl implements AdminService
 	}
 	
 	@Override
-	public String deleteBookingById(Long id) 
-	{
-		if (bookingRepository.existsById(id)) 
-		{
-			bookingRepository.deleteById(id);
-			return "Booking details deleted";
-		}
-		return "Deleting booking datails failes : Invalid booking id";
-	}
-
-
-	@Override
-	public Booking updateBookingDetails(Booking booking) 
-	{
-		return bookingRepository.save(booking);
-	}
-
-	@Override
 	public Booking getBookingDetailsById(Long id) {
 		Optional<Booking> booking = bookingRepository.findById(id);
 		return booking.orElseThrow(() -> new ResourceNotFoundException("Invalid Booking Id!!"));
 	}
+	
+//	@Override
+//	public String deleteBookingById(Long id) 
+//	{
+//		if (bookingRepository.existsById(id)) 
+//		{
+//			bookingRepository.deleteById(id);
+//			return "Booking details deleted";
+//		}
+//		return "Deleting booking datails failes : Invalid booking id";
+//	}
+//
+//
+//	@Override
+//	public Booking updateBookingDetails(Booking booking) 
+//	{
+//		return bookingRepository.save(booking);
+//	}
+//	
+//	@Override
+//	public Booking addNewBookingDetails(Booking newBooking) 
+//	{
+//		if(newBooking.getCustomers() == null || newBooking.getId() == null)
+//		{
+//			throw new IllegalArgumentException("Customer must not be null and must have an ID");
+//		}
+//		Long customerId = newBooking.getCustomers().getId();
+//		Customer customer = customerRepository.findById(customerId)
+//				.orElseThrow(() -> new ResourceNotFoundException("Customer not found with ID: " + customerId));
+//		newBooking.setCustomers(customer);
+//		return bookingRepository.save(newBooking);
+//	}
+
 	
 }

@@ -7,9 +7,12 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.dto.ApiResponse;
+import com.app.dto.BookingDTO;
 import com.app.entities.Booking;
 import com.app.entities.Customer;
 import com.app.exception.ResourceNotFoundException;
@@ -25,6 +28,9 @@ public class BookingServiceImpl implements BookingService
 
 	@Autowired
 	private CustomerRepository customerRepository;
+	
+	@Autowired
+	private ModelMapper mapper;
 
 	@Override
 	public Booking addNewBookingDetails(Booking newBooking) 
@@ -39,8 +45,23 @@ public class BookingServiceImpl implements BookingService
 		newBooking.setCustomers(customer);
 		return bookingRepository.save(newBooking);
 	}
-
 	
+//	@Override
+//	public ApiResponse addNewBookingDetails(BookingDTO dto) 
+//	{
+//		Customer customer = customerRepository.findById(dto.getCustomerId())
+//				.orElseThrow(() -> new ResourceNotFoundException("Customer not found with ID: " + dto.getCustomerId()));
+//		//map dto --> entity
+//		Booking booking = mapper.map(dto, Booking.class);
+//		// establish the associations
+//		// booking--> customer
+//		booking.setCustomers(customer);
+//		// save the booking entity to the database
+//        bookingRepository.save(booking);
+//		return new ApiResponse("New Booking added successfully!!");
+//	}
+
+
 	@Override
 	public List<Booking> getAllBookingDetails() 
 	{

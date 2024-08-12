@@ -22,10 +22,10 @@ public class Payment extends BaseEntity
 	@JoinColumn(name="booking_id", nullable = false)
 	private Booking bookingId;
 	
-	@Column(name="transaction_id", nullable = false)
-	private Long transactionId;
+//	@Column(name="transaction_id", nullable = false)
+//	private Long transactionId;
 	
-	@Column(name="payment_date", nullable = false)
+	@Column(name="payment_date_time", nullable = false)
 	private LocalDateTime paymentDate;
 	
 	@Column(nullable = false)
@@ -40,21 +40,38 @@ public class Payment extends BaseEntity
 		// TODO Auto-generated constructor stub
 	}
 
-	//para-ctor
-	public Payment(Customer customer, double amount, PaymentMode paymentMode) {
+	public Payment(Customer customer, Booking bookingId, LocalDateTime paymentDate, double amount,
+			PaymentMode paymentMode) {
 		super();
 		this.customer = customer;
+		this.bookingId = bookingId;
+		this.paymentDate = paymentDate;
 		this.amount = amount;
 		this.paymentMode = paymentMode;
 	}
 
-	//getter & setter
 	public Customer getCustomer() {
 		return customer;
 	}
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+
+	public Booking getBookingId() {
+		return bookingId;
+	}
+
+	public void setBookingId(Booking bookingId) {
+		this.bookingId = bookingId;
+	}
+
+	public LocalDateTime getPaymentDate() {
+		return paymentDate;
+	}
+
+	public void setPaymentDate(LocalDateTime paymentDate) {
+		this.paymentDate = paymentDate;
 	}
 
 	public double getAmount() {
@@ -73,11 +90,9 @@ public class Payment extends BaseEntity
 		this.paymentMode = paymentMode;
 	}
 
-	//toString
 	@Override
 	public String toString() {
-		return "Payment [customer=" + customer + ", amount=" + amount + ", paymentMode=" + paymentMode + "]";
+		return "Payment [customer=" + customer + ", bookingId=" + bookingId + ", paymentDate=" + paymentDate
+				+ ", amount=" + amount + ", paymentMode=" + paymentMode + "]";
 	}
-	
-	
 }

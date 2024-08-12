@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.dto.ApiResponse;
+import com.app.dto.BookingDTO;
 import com.app.entities.Booking;
 import com.app.service.BookingService;
 import com.app.service.CustomerService;
@@ -59,6 +61,14 @@ public class BookingController
         Booking booking = bookingService.addNewBookingDetails(newBooking);
         return ResponseEntity.status(HttpStatus.CREATED).body(booking);
     }
+
+//    @PostMapping
+//	public ApiResponse addNewBooking(@RequestBody BookingDTO newBooking)
+//	{
+//		System.out.println("in add booking "+ newBooking);
+//		return bookingService.addNewBookingDetails(newBooking);
+//	}
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Booking> updateBookingDetails(@PathVariable Long id, @RequestBody Booking booking) {
