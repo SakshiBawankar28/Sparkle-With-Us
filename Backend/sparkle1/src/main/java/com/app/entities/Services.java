@@ -17,7 +17,7 @@ public class Services extends BaseEntity
 	@Column(length = 20)
 	private ServiceType type;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "stylist_id", nullable = false)
     private Stylist stylist;
 	
