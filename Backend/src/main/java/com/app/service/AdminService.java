@@ -45,6 +45,9 @@ public interface AdminService
 	//Service Management
 	Services getServiceById(Long id);
 	List<Services> getAllService();
+
+
+	Admin authenticate(String email, String password);
 	
 	
 }

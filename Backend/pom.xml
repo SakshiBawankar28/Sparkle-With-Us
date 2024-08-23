@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>sparkle1</artifactId>
+	<artifactId>sparkle_v6</artifactId>
 	<version>0.0.1</version>
-	<name>sparkle1</name>
+	<name>sparkle_v6</name>
 	<description>Template Project for Spring Boot based Backend, swagger,model mapper, JWT , security </description>
 	<properties>
 		<java.version>11</java.version>

@@ -212,5 +212,11 @@ public class AdminServiceImpl implements AdminService
 		return service.orElseThrow(() -> new ResourceNotFoundException("Service Id not found"));
 	}
 
+	@Override
+	public Admin authenticate(String email, String password) {
+		Optional<Admin> adminOpt = adminRepository.findByEmailAndPassword(email, password);
+        return adminOpt.orElseThrow(() -> new RuntimeException("Invalid email or password"));
+	}
+
 	
 }

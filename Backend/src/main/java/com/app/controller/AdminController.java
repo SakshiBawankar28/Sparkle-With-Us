@@ -11,16 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dto.BookingDTO;
 import com.app.entities.Admin;
-import com.app.entities.Booking;
 import com.app.entities.Customer;
 import com.app.entities.Login;
 import com.app.entities.Services;
-import com.app.entities.Specialization;
 import com.app.entities.Stylist;
 import com.app.service.AdminService;
 import com.app.service.BookingService;
@@ -56,15 +53,31 @@ public class AdminController
 	}
     
     
+//    @PostMapping("/login")
+//    public ResponseEntity<Admin> loginAdmin(@RequestBody Login login) {
+//        try {
+//            Admin admin = adminService.loginAdmin(login.getEmail(), login.getPassword());
+//            return ResponseEntity.ok(admin); // HTTP 200 with the admin details
+//        } catch (IllegalArgumentException e) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null); // HTTP 401 Unauthorized
+//        }
+//    }
+    
     @PostMapping("/login")
-    public ResponseEntity<Admin> loginAdmin(@RequestBody Login login) {
+    public ResponseEntity<?> loginAdmin(@RequestBody Login loginRequest) {
         try {
-            Admin admin = adminService.loginAdmin(login.getEmail(), login.getPassword());
-            return ResponseEntity.ok(admin); // HTTP 200 with the admin details
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null); // HTTP 401 Unauthorized
+            // Authenticate the admin (replace this with your actual logic)
+            Admin admin = adminService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
+            if (admin != null) {
+                return ResponseEntity.ok("Login successful");
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Login failed");
         }
     }
+
 
     // Customer Management
 
